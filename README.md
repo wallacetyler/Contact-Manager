@@ -14,21 +14,19 @@ Install MongoDB for Windows. Also be sure to install Node for Windows. Check tha
 
 Be sure to clone this repository. 
 
-Create a the directory `data\db` in your newly cloned repository so your cloned repository should look like
+Create a the directory `data\db` in your root directory.
 
 ```
 react_app
 ├── backend                # API Files
 ├── public                 # Public Files
-├── src                    # Frontend Files
-└── data                   # Newly created database folder
-    └── db                 # Newly created db folder
+└── src                    # Frontend Files
 ```
 
 Using your terminal access the main directory of the app. First you must create the database before anything. To do this on Windows 
 run the following command:
 ```
-"C:\Program Files\MongoDB\Server\4.0\bin\mongod.exe" --dbpath="c:[INSERT PROJECT PATH]\data\db"
+"C:\Program Files\MongoDB\Server\4.0\bin\mongod.exe" --dbpath="c:\data\db"
 ``` 
 Be sure to change [INSERT PROJECT PATH] to be the path on your machine to the cloned repository. If successful you should see:
 ```
@@ -47,13 +45,14 @@ You should see the message `switched to db contact_manager`.
 
 Now let's install the the dependecies for each app using npm. First run `npm install -g nodemon` to install nodemon.
 
-Then access each directory the backend directory in a new Window/Tab and 
-run: 
+Then access the backend directory in a new Window/Tab and run: 
 ```
+npm install
 nodemon server.js
 ```
 Now we will start both the backend then the frontend. In a new Window/Tab access the root folder and run: 
 ```
+npm install
 npm start
 ``` 
 

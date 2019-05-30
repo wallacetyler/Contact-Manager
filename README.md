@@ -101,6 +101,7 @@ No versioning at this time.
 
 * **Tyler Wallace** - *Initial work* - [Tyler Wallace](https://github.com/tylerjwallace)
 * **Anthony Pionessa** - *Front End* - https://codepen.io/sSasquatch/
+* **Dariel Tenf** - *API*
 
 ## License
 

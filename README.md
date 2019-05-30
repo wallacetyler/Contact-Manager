@@ -101,6 +101,7 @@ No versioning at this time.
 ## Authors
 
 * **Tyler Wallace** - *Initial work* - [Tyler Wallace](https://github.com/tylerjwallace)
+* **Anthony Pionessa** - *Front End* - https://codepen.io/sSasquatch/
 
 ## License
 

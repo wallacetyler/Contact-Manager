@@ -1,68 +1,113 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# Contact Manager
 
-## Available Scripts
+Description of our contact manage can go here.
 
-In the project directory, you can run:
+## Getting Started
 
-### `npm start`
+These instructions will get you a copy of the project up and running on your local machine for development and testing purposes.
 
-Runs the app in the development mode.<br>
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+### Prerequisites
 
-The page will reload if you make edits.<br>
-You will also see any lint errors in the console.
+Install MongoDB for Windows. Also be sure to install Node for Windows. Check that Node is working by opening PowerShell as admin and running the following commands `npm -v`. You should see a version number. 
 
-### `npm test`
+### Installing
 
-Launches the test runner in the interactive watch mode.<br>
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+Be sure to clone this repository. 
 
-### `npm run build`
+Create a the directory `data\db` in your newly cloned repository so your cloned repository should look like
 
-Builds the app for production to the `build` folder.<br>
-It correctly bundles React in production mode and optimizes the build for the best performance.
+```
+react_app
+├── backend                # API Files
+├── public                 # Public Files
+├── src                    # Frontend Files
+└── data                   # Newly created database folder
+    └── db                 # Newly created db folder
+```
 
-The build is minified and the filenames include the hashes.<br>
-Your app is ready to be deployed!
+Using your terminal access the main directory of the app. First you must create the database before anything. To do this on Windows 
+run the following command:
+```
+"C:\Program Files\MongoDB\Server\4.0\bin\mongod.exe" --dbpath="c:[INSERT PROJECT PATH]\data\db"
+``` 
+Be sure to change [INSERT PROJECT PATH] to be the path on your machine to the cloned repository. If successful you should see:
+```
+[initandlisten] waiting for connections
+``` 
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+Now we need to create the database. In a new Window/Tab run:
+```
+"C:\Program Files\MongoDB\Server\4.0\bin\mongo.exe"
+```
+then run:
+```
+use contact_manager
+```
+You should see the message `switched to db contact_manager`. 
 
-### `npm run eject`
+Now let's install the the dependecies for each app using npm. First run `npm install -g nodemon` to install nodemon.
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+Then access each directory the backend directory in a new Window/Tab and 
+run: 
+```
+nodemon server.js
+```
+Now we will start both the backend then the frontend. In a new Window/Tab access the root folder and run: 
+```
+npm start
+``` 
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+You can now access http://localhost:3000/ to see the homepage of the app. If everything is working correctly you should also be able to scroll down on the page and see both 'API is working properly' and 'Connected to database'.
 
-Instead, it will copy all the configuration files and the transitive dependencies (Webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+## Running the tests
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+I don't think we will end up having tests unless we have a bunch of extra time.
 
-## Learn More
+### Break down into end to end tests
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+Explain what these tests test and why
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+```
+Give an example
+```
 
-### Code Splitting
+### And coding style tests
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/code-splitting
+Explain what these tests test and why
 
-### Analyzing the Bundle Size
+```
+Give an example
+```
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size
+## Deployment
 
-### Making a Progressive Web App
+Add additional notes about how to deploy this on a live system
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app
+## Built With
 
-### Advanced Configuration
+* [Facebook create-react-app](https://github.com/facebook/create-react-app) - The React project framework used
+* [Express](https://github.com/expressjs/express) - Web framework for Node
+* [MongoDB](https://github.com/mongodb/mongo) - Used for database
+* [Mongoose](https://mongoosejs.com/) - Object Data Modeling (ODM) library for MongoDB and Node.js
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/advanced-configuration
+## Contributing
 
-### Deployment
+Please read [CONTRIBUTING.md](#) for details on our code of conduct, and the process for submitting pull requests to us.
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/deployment
+## Versioning
 
-### `npm run build` fails to minify
+No versioning at this time.
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
+## Authors
+
+* **Tyler Wallace** - *Initial work* - [Tyler Wallace](https://github.com/tylerjwallace)
+
+## License
+
+This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details
+
+## Acknowledgments
+
+* Hat tip to anyone whose code was used
+* Inspiration
+* etc

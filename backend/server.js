@@ -45,12 +45,9 @@ contactRoutes.route('/update/:id').post(function(req, res) {
             res.status(404).send("data is not found");
         else
             contact.contact_name = req.body.contact_name;
-            contact.contact_nickname = req.body.contact_nickname;
-            contact.contact_birthday = req.body.contact_birthday;
             contact.contact_email= req.body.contact_email;
             contact.contact_address = req.body.contact_address;
             contact.contact_phone = req.body.contact_phone;
-            contact.contact_notes = req.body.contact_notes;
 
             contact.save().then(contact => {
                 res.json('Contact updated!');

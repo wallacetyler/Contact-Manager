@@ -1,0 +1,68 @@
+form {
+  margin: 0 auto;
+  width: 300px;
+}
+
+html {
+  background-color: #424242;
+  height: 100%;
+}
+
+body {
+  vertical-align: middle;
+  height: 100%;
+}
+
+header {
+  text-align: center;
+  color: #969696;
+  font-size: 20px;
+  font-family: "Lucida Sans Typewriter", "Lucida Console", Monaco, "Bitstream Vera Sans Mono", monospace;
+  margin-bottom: 20px;
+}
+
+input {
+  width: 300px;
+  padding: 20px 0px;
+  background: transparent;
+  border: 0;
+  border-bottom: 1px solid #616161;
+  outline: none;
+  color: #696969;
+  font-size: 15px;
+  font-family: "Century Gothic", CenturyGothic, Geneva, AppleGothic, sans-serif;
+}
+
+button {
+  background: #5666f3;
+  border: 0;
+  width: 80px;
+  height: 40px;
+  border-radius: 3px;
+  color: #e1e1e1;
+  font-size: 15px;
+  cursor: pointer;
+  font-family: "Century Gothic", CenturyGothic, Geneva, AppleGothic, sans-serif;
+}
+
+button:hover {
+  background: #384af1;
+}
+
+label {
+  cursor:pointer;
+  border: 0;
+  width: 80px;
+  height: 40px;
+  border-radius: 3px;
+  color: #e1e1e1;
+  font-size: 15px;
+  font-family: "Century Gothic", CenturyGothic, Geneva, AppleGothic, sans-serif;
+  margin-left: 1px;
+}
+
+
+footer {
+  margin-top: 20px;
+  width: 300px;
+}

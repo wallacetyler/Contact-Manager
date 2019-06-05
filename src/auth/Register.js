@@ -6,12 +6,9 @@ class Register extends Component {
   constructor() {
     super();
     this.state = {
-      fname: "",
-	  lname: "",
-      email: "",
-	  user: "",
-      password: "",
-      errors: {}
+	user: "",
+      	password: "",
+      	errors: {}
     };
   }
 
@@ -23,11 +20,8 @@ class Register extends Component {
     e.preventDefault();
 
 	const newUser = {
-      fname: this.state.fname,
-	  lname: this.state.lname,
-      email: this.state.email,
 	  user: this.state.user,
-      password: this.state.password,
+      	password: this.state.password,
     };
 
 	console.log(newUser);
@@ -45,24 +39,6 @@ class Register extends Component {
 
 			<form id="register-form" action="" method="post" noValidate onSubmit={this.onSubmit}>
 
-			  <input type="fname" placeholder="First Name" 
-				onChange={this.onChange}
-				value={this.state.fname}
-				error={errors.fname}
-				id="fname"
-				required/>
-			  <input type="lname" placeholder="Last Name" 
-				onChange={this.onChange}
-				value={this.state.lname}
-				error={errors.lname}
-				id="lname"
-				required/>
-			  <input type="email" placeholder="eMail" 
-				onChange={this.onChange}
-				value={this.state.email}
-				error={errors.email}
-				id="email"
-				required/>
 			  <input type="text" placeholder="Username" 
 				onChange={this.onChange}
 				value={this.state.user}

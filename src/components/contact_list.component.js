@@ -41,9 +41,9 @@ class App extends Component {
   }
 
   contactList() {
-        return this.state.hits.map(function(currentContact, i){
+        return this.state.hits.map(function(currentContact, i) {
             return <Contact contact={currentContact} key={i} />;
-        })
+        });
     }
 
   render() {
@@ -58,6 +58,7 @@ class App extends Component {
                             <th>Email</th>
                             <th>Address</th>
                             <th>Phone</th>
+                            <th>Action</th>
                         </tr>
                     </thead>
                     <tbody>

@@ -48,7 +48,7 @@ class Register extends Component {
 		})
 		.then(response => response.json())
 		  .then(data => {
-			  if(data.status == 'failure')
+			  if(data.status === 'failure')
 				  console.log('username already taken');
 			  else
 			  {

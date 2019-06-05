@@ -1,15 +1,14 @@
 import React, { Component } from 'react';
-import axios from 'axios';
 
 export default class AddContact extends Component {
 	constructor(props) {
         super(props);
 
         this.state = {
-            contact_name: '',
-            contact_email: '',
-            contact_address: '',
-            contact_phone: ''
+            name: '',
+            email: '',
+            address: '',
+            phone: ''
         }
         this.onChangeContactName = this.onChangeContactName.bind(this);
         this.onChangeContactEmail = this.onChangeContactEmail.bind(this);
@@ -19,25 +18,25 @@ export default class AddContact extends Component {
     }
     onChangeContactName(e) {
         this.setState({
-            contact_name: e.target.value
+            name: e.target.value
         });
     }
 
     onChangeContactEmail(e) {
         this.setState({
-            contact_email: e.target.value
+            email: e.target.value
         });
     }
 
     onChangeContactAddress(e) {
         this.setState({
-            contact_address: e.target.value
+            address: e.target.value
         });
     }
 
     onChangeContactPhone(e) {
         this.setState({
-            contact_phone: e.target.value
+            phone: e.target.value
         });
     }
 
@@ -45,27 +44,26 @@ export default class AddContact extends Component {
         e.preventDefault();
         
         console.log(`Form submitted:`);
-        console.log(`Contact Name: ${this.state.contact_name}`);
-        console.log(`Contact Email: ${this.state.contact_email}`);
-        console.log(`Contact Address: ${this.state.contact_address}`);
-        console.log(`Contact Phone: ${this.state.contact_phone}`);
+        console.log(`Contact Name: ${this.state.name}`);
+        console.log(`Contact Email: ${this.state.email}`);
+        console.log(`Contact Address: ${this.state.address}`);
+        console.log(`Contact Phone: ${this.state.phone}`);
      
         const newContact = {
-            contact_name: this.state.contact_name,
-            contact_email: this.state.contact_email,
-            contact_address: this.state.contact_address,
-            contact_phone: this.state.contact_phone
-
+            name: this.state.name,
+            email: this.state.email,
+            address: this.state.address,
+            phone: this.state.phone,
+			userid: window.location.href.split("?")[1]
         };
-
-        axios.post('http://localhost:4000/contacts/add', newContact)
-            .then(res => console.log(res.data));
-        this.setState({
-            contact_name: '',
-            contact_email: '',
-            contact_address: '',
-            contact_phone: ''
-        })
+		
+		fetch('http://localhost:4000/contacts/add',
+		{
+			method: 'POST',
+			headers: { "Content-Type": "application/json" },
+			body: JSON.stringify(newContact)
+		})
+		.then(() => window.location.href = "/ContactList?" + window.location.href.split("?")[1]);
     }
     render() {
         return (

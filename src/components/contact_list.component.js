@@ -1,19 +1,5 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-import axios from 'axios';
-
-const API = 'https://localhost:4000/contacts';
-const Contact = props => (
-    <tr>
-        <td>{props.contact.contact_name}</td>
-        <td>{props.contact.contact_email}</td>
-        <td>{props.contact.contact_address}</td>
-        <td>{props.contact.contact_address}</td>
-        <td>
-            <Link to={"/edit/"+props.contact._id}>Edit</Link>
-        </td>
-    </tr>
-)
 
 export default class ContactList extends Component {
   constructor(props) {
@@ -21,35 +7,68 @@ export default class ContactList extends Component {
 
     this.state = {
       hits: [],
-      isLoading: false,
       error: null,
+	  userid: ""
     };
+	
+	this.addContact = this.addContact.bind(this);
   }
 
   componentDidMount() {
-    this.setState({ isLoading: true });
-
-    axios.get(API)
-      .then(result => this.setState({
-        hits: result.data.hits,
-        isLoading: false
-      }))
-      .catch(error => this.setState({
-        error,
-        isLoading: false
-      }));
+	  if(!window.location.href.includes('?'))
+		  window.location.href = "/Login";
+	  
+		var idtext = window.location.href.split("?")[1];
+		this.setState({userid: idtext});
+	
+	fetch('http://localhost:4000/contacts/list',
+		{
+			method: 'POST',
+			headers: { "Content-Type": "application/json" },
+			body: JSON.stringify({ uid: idtext })
+		})
+		.then(response => response.json())
+		.then(data => this.setState({
+			hits: data
+		}));
   }
 
+	addContact(e) {
+		e.preventDefault();
+		if(!window.location.href.includes('?'))
+		  window.location.href = "/Login";
+	  
+		var idtext = window.location.href.split("?")[1];
+		
+		window.location.href = "/AddContact?" + idtext;
+	}
+
   contactList() {
-        return this.state.hits.map(function(currentContact, i){
-            return <Contact contact={currentContact} key={i} />;
-        });
+	  if(this.state.hits.status === "failure")
+		  return;
+	  
+	  console.log(this.state.hits);
+	  
+	  var id = this.state.userid;
+	  return this.state.hits.map(function(currentContact, i)
+	  {
+		  return (    
+		  <tr>
+			<td>{currentContact.name}</td>
+			<td>{currentContact.email}</td>
+			<td>{currentContact.address}</td>
+			<td>{currentContact.phone}</td>
+			<td>
+				<Link to={"/UpdateContact?" + id + "?" + currentContact._id}>Edit</Link>
+			</td>
+		</tr>)
+	  });
     }
 
   render() {
     return (
         <div>
-            <p>Welcome to Add Contact Component!!</p>
+            <p>Welcome to Contact List Component!!</p>
             <h3>Contact List</h3>
                 <table className="table table-striped" style={{ marginTop: 20 }} >
                     <thead>
@@ -65,6 +84,7 @@ export default class ContactList extends Component {
                         { this.contactList() }
                     </tbody>
                 </table>
+				<input type="submit" value="Add Contact" className="btn btn-primary" onClick={this.addContact}/>
         </div>
     )
   }

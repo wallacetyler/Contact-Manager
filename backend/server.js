@@ -4,6 +4,7 @@ const bodyParser = require('body-parser');
 const cors = require('cors');
 const MongoClient = require("mongodb").MongoClient;
 const PORT = 4000;
+var ObjectId = require('mongodb').ObjectId;
 
 let Contact = require('./contact.model');
 
@@ -81,47 +82,79 @@ app.post('/users/register', function(request, response)
 	});
 });
 
-app.get('/id', function(req, res) {
-    let id = req.params.id;
-    Contact.findById(id, function(err, contact) {
-        res.json(contact);
-    });
+app.post('/contacts/list', function(request, response)
+{
+	var query = { userid: request.body.uid };
+	
+	contactdb.find(query).toArray(function(err, result)
+	{
+		console.log(result.length + " contacts found from id: " + request.body.uid);
+		if(err)
+			return response.json({status: "failure"});
+		
+		if(result.length > 0)
+		{
+			return response.json(result);
+		}
+		
+		return response.json({status: "failure"});
+	});
 });
 
-app.post('/updateid', function(req, res) {
-    Contact.findById(req.params.id, function(err, contact) {
-        if (!contact)
-            res.status(404).send("data is not found");
-        else
-            contact.contact_name = req.body.contact_name;
-            contact.contact_email= req.body.contact_email;
-            contact.contact_address = req.body.contact_address;
-            contact.contact_phone = req.body.contact_phone;
-
-            contact.save().then(contact => {
-                res.json('Contact updated!');
-            })
-            .catch(err => {
-                res.status(400).send("Update not possible");
-            });
-    });
+app.post('/contacts/add', function(request, response)
+{
+	var query = { id: request.body.uid };
+	
+	userdb.find(query).toArray(function(err, result)
+	{
+		if(result.length > 0)
+		{
+			contactdb.insertOne(request.body);
+			console.log("Added contact named: " + request.body.name);
+			return response.json({status: "success"});
+		}
+		
+		return response.json({status: "failure"});
+	});
 });
 
-app.post('/add', function(req, res) {
-	console.log('add contact');
-    let contact = new Contact(req.body);
-    contact.save()
-        .then(contact => {
-            res.status(200).json({'contact': 'contact added successfully'});
-        })
-        .catch(err => {
-            res.status(400).send('adding new contact failed\n' + err);
-        });
+app.post('/contacts/update', function(request, response)
+{
+	var query = { userid: request.body.uid, _id: ObjectId(request.body.cid) };
+	
+	contactdb.find(query).toArray(function(err, result)
+	{
+		console.log(query.userid + "|" + query._id);
+		console.log(result.length);
+		if(result.length >= 1)
+		{
+			var addContactBody =
+			{
+				name: request.body.name,
+				email: request.body.email,
+				address: request.body.address,
+				phone: request.body.phone,
+				userid: request.body.uid
+			}
+			
+			contactdb.update(query, addContactBody)
+			//return response.json({status: "success"});
+		}
+		//return response.json({status: "failure"});
+	});
+	
+	return response.json({status: "failure"});
 });
 
-app.delete('/delete/:id', function(req, res) {
-    Contact.findByIdAndRemove({_id: req.params.id})
-        .then(function(contact) {
-            res.send(contact);
-        });
+app.post('/contacts/find', function(request, response)
+{
+	var query = { userid: request.body.uid, _id: request.body.cid };
+	
+	contactdb.find(query).toArray(function(err, result)
+	{
+		if(result.length >= 1)
+			return response.json({status: "success"});
+	});
+	
+	return response.json({status: "failure"});
 });

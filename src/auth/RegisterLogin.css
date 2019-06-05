@@ -1,5 +1,5 @@
 form {
-  margin: 0 auto;
+  margin: auto;
   width: 300px;
 }
 
@@ -28,13 +28,9 @@ input {
   border: 0;
   border-bottom: 1px solid #616161;
   outline: none;
-  color: #e1e1e1;
+  color: #696969;
   font-size: 15px;
   font-family: "Century Gothic", CenturyGothic, Geneva, AppleGothic, sans-serif;
-}
-
-input::placeholder {
-	color: #696969;
 }
 
 button {
@@ -62,11 +58,18 @@ label {
   color: #e1e1e1;
   font-size: 15px;
   font-family: "Century Gothic", CenturyGothic, Geneva, AppleGothic, sans-serif;
-  margin-left: 1px;
+  margin-left: 5px;
 }
 
 
 footer {
   margin-top: 20px;
   width: 300px;
+}
+
+#failed {
+  color: #ff9999;
+  font-size: 13px;
+  font-family: "Century Gothic", CenturyGothic, Geneva, AppleGothic, sans-serif;
+  text-align: center;
 }

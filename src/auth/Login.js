@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import md5 from "md5"
-import AddContact from '../components/add_contact.component.js'
 
 import "./RegisterLogin.css";
 
@@ -43,13 +42,13 @@ class Login extends Component {
 		})
 		.then(response => response.json())
 		  .then(data => {
-			  if(data.status == 'failure')
+			  if(data.status === 'failure')
 				  console.log('invalid login credentials');
-			  else if(data.status == 'success')
+			  else if(data.status === 'success')
 			  {
 				console.log(data.id);
 				console.log('continuing login');
-				window.location.href = "/ContactList";
+				window.location.href = "/ContactList?" + data.id;
 			  }
 		  });
 	}

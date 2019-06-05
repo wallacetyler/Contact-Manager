@@ -1,6 +1,10 @@
 import React, { Component } from 'react';
 
+var localApiUrl = "http://localhost:4000";
+var detachedApiUrl = "http://greatcontactmanager.ddns.net:4000";
+
 export default class UpdateContact extends Component {
+
 	constructor(props) {
         super(props);
 
@@ -57,7 +61,8 @@ export default class UpdateContact extends Component {
 		
 		console.log(cidtext + "|" + uidtext);
 		
-		fetch('http://localhost:4000/contacts/update',
+		var apiURL = window.location.href.includes("localhost")?localApiUrl:detachedApiUrl;
+		fetch(apiURL + '/contacts/update',
 		{
 			method: 'POST',
 			headers: { "Content-Type": "application/json" },
@@ -78,7 +83,8 @@ export default class UpdateContact extends Component {
 		var uidtext = window.location.href.split("?")[1];
 		var cidtext = window.location.href.split("?")[2];
 		
-		fetch('http://localhost:4000/contacts/find',
+		var apiURL = window.location.href.includes("localhost")?localApiUrl:detachedApiUrl;
+		fetch(apiURL + '/contacts/find',
 		{
 			method: 'POST',
 			headers: { "Content-Type": "application/json" },

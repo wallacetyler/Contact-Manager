@@ -1,7 +1,12 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 
+const localApiUrl = "http://localhost:4000";
+const detachedApiUrl = "http://greatcontactmanager.ddns.net:4000";
+
+
 export default class ContactList extends Component {
+	
   constructor(props) {
     super(props);
 
@@ -21,7 +26,9 @@ export default class ContactList extends Component {
 		var idtext = window.location.href.split("?")[1];
 		this.setState({userid: idtext});
 	
-	fetch('http://localhost:4000/contacts/list',
+		var apiURL = window.location.href.includes("localhost")?localApiUrl:detachedApiUrl;
+	
+		fetch(apiURL + '/contacts/list',
 		{
 			method: 'POST',
 			headers: { "Content-Type": "application/json" },

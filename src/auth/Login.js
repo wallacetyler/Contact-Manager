@@ -4,7 +4,11 @@ import md5 from "md5"
 
 import "./RegisterLogin.css";
 
+var localApiUrl = "http://localhost:4000";
+var detachedApiUrl = "http://greatcontactmanager.ddns.net:4000";
+
 class Login extends Component {
+	
   constructor(props) {
     super(props);
     this.state = {
@@ -33,8 +37,8 @@ class Login extends Component {
 			hash: md5(this.state.password)
 		};
 		
-		
-		fetch('http://localhost:4000/users/login',
+		var apiURL = window.location.href.includes("localhost")?localApiUrl:detachedApiUrl;
+		fetch(apiURL + '/users/login',
 		{
 			method: 'POST',
 			headers: { "Content-Type": "application/json" },

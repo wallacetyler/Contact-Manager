@@ -2,8 +2,12 @@ import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import "./RegisterLogin.css";
 import md5 from "md5"
+	
+var localApiUrl = "http://localhost:4000";
+var detachedApiUrl = "http://greatcontactmanager.ddns.net:4000";
 
 class Register extends Component {
+	
   constructor(props) {
     super(props);
     this.state = {
@@ -39,8 +43,8 @@ class Register extends Component {
 			hash: md5(this.state.password)
 		};
 		
-		
-		fetch('http://localhost:4000/users/register',
+		var apiURL = window.location.href.includes("localhost")?localApiUrl:detachedApiUrl;
+		fetch(apiURL + '/users/register',
 		{
 			method: 'POST',
 			headers: { "Content-Type": "application/json" },

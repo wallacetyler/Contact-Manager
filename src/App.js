@@ -8,6 +8,7 @@ import UpdateContact from "./components/update_contact.component";
 class App extends Component {
   render() {
     return (
+<<<<<<< Updated upstream
       <Router>
         <div className="container">
           <nav className="navbar navbar-expand-lg navbar-light bg-light">
@@ -30,6 +31,18 @@ class App extends Component {
           <Route path="/add" component={AddContact} />
         </div>
       </Router>
+=======
+			<Router>
+				<div className="App">
+				  <Route exact path="/" component={Landing} />
+				  <Route exact path="/login" component={Login} />
+				  <Route exact path="/register" component={Register} />
+				  <Route exact path="/AddContact" component={AddContact} />
+				  <Route exact path="/ContactList" component={ContactList} />
+				  <Route exact path="/UpdateContact" component={UpdateContact} />
+				</div>
+			</Router>
+>>>>>>> Stashed changes
     );
   }
 }

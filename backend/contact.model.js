@@ -6,12 +6,6 @@ let Contact = new Schema ({
         type: String,
         required: true
     },
-    contact_nickname: {
-        type: String
-    },
-    contact_birthday: {
-        type: Date
-    },
     contact_email: {
         type: String,
         required: true
@@ -22,9 +16,7 @@ let Contact = new Schema ({
     },
     contact_phone: {
         type: String,
-    },
-    contact_notes: {
-        type: String
+        required:true
     }
 })
 

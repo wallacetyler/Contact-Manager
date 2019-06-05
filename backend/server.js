@@ -2,55 +2,101 @@ const express = require('express');
 const app = express();
 const bodyParser = require('body-parser');
 const cors = require('cors');
-const mongoose = require('mongoose');
-const contactRoutes = express.Router();
+const MongoClient = require("mongodb").MongoClient;
 const PORT = 4000;
 
 let Contact = require('./contact.model');
 
 app.use(cors());
 app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
 
-mongoose.connect('mongodb://127.0.0.1:27017/contact_manager', {
-    useNewUrlParser: true
-});
-const connection = mongoose.connection;
-
-connection.once('open', function() {
-    console.log("MongoDB database connection established successfully");
-})
-
-// API endpoint to retrieve contact
-contactRoutes.route('/').get(function(req, res) {
-    Contact.find(function(err, contacts) {
-        if (err) {
-            console.log(err);
+app.listen(4000, () => {
+    MongoClient.connect('mongodb+srv://admin:admin@cluster0-0wwjj.mongodb.net/test?retryWrites=true&w=majority', { useNewUrlParser: true }, (error, client) => {
+        if(error) {
+            throw error;
         }
-        else {
-            res.json(contacts);
-        }
+        database = client.db('contactmanager');
+        contactdb = database.collection("contacts");
+        userdb = database.collection("users");
+        console.log("Connected to both dbs!");
     });
 });
 
-contactRoutes.route('/:id').get(function(req, res) {
+// API endpoint to retrieve contact
+app.get('/contacts', function(request, response) {
+    contactdb.find({}).toArray((error, result) => {
+        if(error) {
+            return response.status(500).send(error);
+        }
+        response.send(result);
+    });
+});
+
+app.post('/users/login', function(request, response)
+{	
+	var query = { user: request.body.user, hash: request.body.hash };
+	
+	userdb.find(query).toArray(function(err, result)
+	{
+		if(err)
+			return response.json({status: "failure"});
+		
+		if(result.length == 1)
+		{
+			console.log("Successful login for user: " + request.body.user);
+			return response.json({status: "success", id: result[0]._id });
+		}
+		else
+		{
+			console.log("Failed login for user: " + request.body.user);
+			return response.json({status: "failure"});
+		}
+	});
+});
+
+app.post('/users/register', function(request, response)
+{
+	var query = { user: request.body.user };
+	
+	userdb.find(query).toArray(function(err, result)
+	{
+		if(err)
+			return response.json({status: "failure"});
+		
+		if(result.length == 0)
+		{
+			console.log("Registered user: " + request.body.user);
+			var registerBody =
+			{
+				user: request.body.user,
+				hash: request.body.hash
+			};
+			userdb.insertOne(registerBody);
+			return response.json({status: "success"});
+		}
+		
+		console.log("User already taken: " + request.body.user);
+		return response.json({status: "failure"});
+	});
+});
+
+app.get('/id', function(req, res) {
     let id = req.params.id;
     Contact.findById(id, function(err, contact) {
         res.json(contact);
     });
 });
 
-contactRoutes.route('/update/:id').post(function(req, res) {
+app.post('/updateid', function(req, res) {
     Contact.findById(req.params.id, function(err, contact) {
         if (!contact)
             res.status(404).send("data is not found");
         else
             contact.contact_name = req.body.contact_name;
-            contact.contact_nickname = req.body.contact_nickname;
-            contact.contact_birthday = req.body.contact_birthday;
             contact.contact_email= req.body.contact_email;
             contact.contact_address = req.body.contact_address;
             contact.contact_phone = req.body.contact_phone;
-            contact.contact_notes = req.body.contact_notes;
 
             contact.save().then(contact => {
                 res.json('Contact updated!');
@@ -61,7 +107,8 @@ contactRoutes.route('/update/:id').post(function(req, res) {
     });
 });
 
-contactRoutes.route('/add').post(function(req, res) {
+app.post('/add', function(req, res) {
+	console.log('add contact');
     let contact = new Contact(req.body);
     contact.save()
         .then(contact => {
@@ -72,15 +119,9 @@ contactRoutes.route('/add').post(function(req, res) {
         });
 });
 
-contactRoutes.route('/delete/:id').delete(function(req, res) {
+app.delete('/delete/:id', function(req, res) {
     Contact.findByIdAndRemove({_id: req.params.id})
         .then(function(contact) {
             res.send(contact);
         });
 });
-
-app.use('/contacts', contactRoutes);
-
-app.listen(PORT, function() {
-    console.log("Server is running on Port:" + PORT);
-})

@@ -103,6 +103,7 @@ No versioning at this time.
 * **Anthony Pionessa** - *Front End* - https://codepen.io/sSasquatch/
 * **Dariel Tenf** - *API*
 * **Scott Scalera** - *Search*
+* **Bryce Vichi** - *Database work and Login Authentification* - [Bryce Vichi] (https://github.com/sicryption)
 
 ## License
 

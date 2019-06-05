@@ -60,6 +60,10 @@ class Login extends Component {
 			</Link>
           </footer>
 
+		  <div id="failed">
+			<p>Incorrect login or password! Please try again!</p>
+		  </div>
+
         </form>
       </div>
     );

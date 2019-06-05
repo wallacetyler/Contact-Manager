@@ -59,9 +59,14 @@ class Register extends Component {
 				</Link>
 			  </footer>
 
+			  <div id="failed">
+				<p>Username is already taken! Please try again!</p>
+			  </div>
+
 			</form>
 		</div>
     );
   }
 }
 export default Register;
+

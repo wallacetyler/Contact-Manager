@@ -51,6 +51,7 @@ class App extends Component {
         <div>
             <p>Welcome to Add Contact Component!!</p>
             <h3>Contact List</h3>
+				<input type="text" placeholder="Search" class="search"/>
                 <table className="table table-striped" style={{ marginTop: 20 }} >
                     <thead>
                         <tr>

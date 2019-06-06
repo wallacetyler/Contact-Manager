@@ -14,7 +14,8 @@ class Login extends Component {
     this.state = {
       user: "",
       password: "",
-      errors: {}
+      errors: {},
+	  errorMessageVisability: false
     };
 	
 		this.login = this.login.bind(this);
@@ -47,7 +48,11 @@ class Login extends Component {
 		.then(response => response.json())
 		  .then(data => {
 			  if(data.status === 'failure')
-				  console.log('invalid login credentials');
+			  { 
+				this.setState({ errorMessageVisability: true });
+				  
+				console.log('invalid login credentials');
+			  }
 			  else if(data.status === 'success')
 			  {
 				console.log(data.id);
@@ -88,7 +93,9 @@ class Login extends Component {
 				<label htmlFor="switch"><span>Need an account? Register</span></label>
 			</Link>
           </footer>
-
+			<div id="failed">
+				{ this.state.errorMessageVisability ? <p>Invalid username or password.</p> : null } 
+			  </div>
         </form>
       </div>
     );

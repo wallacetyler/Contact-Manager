@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 
+import "../auth/RegisterLogin.css";
+
 const localApiUrl = "http://localhost:4000";
 const detachedApiUrl = "http://greatcontactmanager.ddns.net:4000";
 
@@ -77,6 +79,7 @@ export default class ContactList extends Component {
         <div>
             <p>Welcome to Contact List Component!!</p>
             <h3>Contact List</h3>
+				<input type="text" placeholder="Search" class="search"/>
                 <table className="table table-striped" style={{ marginTop: 20 }} >
                     <thead>
                         <tr>
@@ -91,7 +94,7 @@ export default class ContactList extends Component {
                         { this.contactList() }
                     </tbody>
                 </table>
-				<input type="submit" value="Add Contact" className="btn btn-primary" onClick={this.addContact}/>
+				<button type="submit" value="Add Contact" onClick={this.addContact}>Add Contact</button>
         </div>
     )
   }

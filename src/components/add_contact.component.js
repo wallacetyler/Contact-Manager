@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 
+import "../auth/RegisterLogin.css";
+
 var localApiUrl = "http://localhost:4000";
 var detachedApiUrl = "http://greatcontactmanager.ddns.net:4000";
 
@@ -114,7 +116,7 @@ export default class AddContact extends Component {
 	                    </div>
 
 	                    <div className="form-group">
-	                        <input type="submit" value="Create Contact" className="btn btn-primary" />
+							<button type="submit" value="Create Contact">Create Contact</button>
 	                    </div>
 	                </form>
 	            </div>

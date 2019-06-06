@@ -13,7 +13,8 @@ class Register extends Component {
     this.state = {
 	  user: "",
       password: "",
-      errors: {}
+      errors: {},
+	  errorMessageVisability: false
     };
 	
 	this.doRegister = this.doRegister.bind(this);
@@ -53,7 +54,10 @@ class Register extends Component {
 		.then(response => response.json())
 		  .then(data => {
 			  if(data.status === 'failure')
+			  {
+				this.setState({ errorMessageVisability: true });
 				  console.log('username already taken');
+			  }
 			  else
 			  {
 				  console.log('registration successful');
@@ -67,8 +71,8 @@ class Register extends Component {
 	return (
 		<div className="container">
 
-			<header class="header">
-				<h2 class="title">Contact Manager</h2>
+			<header className="header">
+				<h2 className="title">Contact Manager</h2>
 				<p>Register</p>
 			</header>
 
@@ -90,9 +94,12 @@ class Register extends Component {
 			  <footer>
 				<button type="submit" onClick={this.doRegister}>Register</button>
 				<Link to="./Login" id="switch">
-					<label for="switch">Already registered? Login</label>
+					<label htmlFor="switch">Already registered? Login</label>
 				</Link>
 			  </footer>
+			  <div id="failed">
+				{ this.state.errorMessageVisability ? <p>Username already taken.</p> : null } 
+			  </div>
 			</form>
 		</div>
     );

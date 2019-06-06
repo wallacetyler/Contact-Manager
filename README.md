@@ -58,40 +58,11 @@ npm start
 
 You can now access http://localhost:3000/ to see the homepage of the app. If everything is working correctly you should also be able to scroll down on the page and see both 'API is working properly' and 'Connected to database'.
 
-## Running the tests
-
-I don't think we will end up having tests unless we have a bunch of extra time.
-
-### Break down into end to end tests
-
-Explain what these tests test and why
-
-```
-Give an example
-```
-
-### And coding style tests
-
-Explain what these tests test and why
-
-```
-Give an example
-```
-
-## Deployment
-
-Add additional notes about how to deploy this on a live system
-
 ## Built With
 
 * [Facebook create-react-app](https://github.com/facebook/create-react-app) - The React project framework used
 * [Express](https://github.com/expressjs/express) - Web framework for Node
 * [MongoDB](https://github.com/mongodb/mongo) - Used for database
-* [Mongoose](https://mongoosejs.com/) - Object Data Modeling (ODM) library for MongoDB and Node.js
-
-## Contributing
-
-Please read [CONTRIBUTING.md](#) for details on our code of conduct, and the process for submitting pull requests to us.
 
 ## Versioning
 
@@ -110,6 +81,5 @@ This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md
 
 ## Acknowledgments
 
-* Hat tip to anyone whose code was used
-* Inspiration
-* etc
+* Stackoverflow
+* Various tutorials

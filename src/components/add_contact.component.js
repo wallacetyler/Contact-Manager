@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-import "../auth/RegisterLogin.css";
+import "./Contact.css";
 
 var localApiUrl = "http://localhost:4000";
 var detachedApiUrl = "http://greatcontactmanager.ddns.net:4000";
@@ -20,6 +20,7 @@ export default class AddContact extends Component {
         this.onChangeContactAddress = this.onChangeContactAddress.bind(this);
         this.onChangeContactPhone = this.onChangeContactPhone.bind(this);
         this.onSubmit = this.onSubmit.bind(this);
+        this.onCancel = this.onCancel.bind(this);
     }
     onChangeContactName(e) {
         this.setState({
@@ -45,6 +46,15 @@ export default class AddContact extends Component {
         });
     }
 
+	onCancel(e)
+	{
+        e.preventDefault();
+		
+		console.log("canceling");
+		var uidtext = window.location.href.split("?")[1];
+		window.location.href = "/ContactList?" + uidtext;
+	}
+	
 	onSubmit(e) {
         e.preventDefault();
         
@@ -72,54 +82,69 @@ export default class AddContact extends Component {
     }
     render() {
         return (
-        	<div>
-	            <div>
-	                <p>Welcome to Add Contact Component!!</p>
-	            </div>
-	            <div style={{marginTop: 10}}>
-	                <h3>Create New Contact</h3>
-	                <form onSubmit={this.onSubmit}>
+        	<div class="form" id="form">
+
+	                <header class="header">
+						<h2 class="title">Contact Manager</h2>
+						<p>Add Contact</p>
+					</header>
+
+	                <form id="manager_add" action="" method="post" onSubmit={this.onSubmit}>
 	                    <div className="form-group"> 
-	                        <label>Name: </label>
-	                        <input  type="text"
+	                        <input  type="name"
 	                                className="form-control"
 	                                value={this.state.contact_name}
 	                                onChange={this.onChangeContactName}
+									placeholder="Name"
 	                                />
 	                    </div>
 	                    <div className="form-group">
-	                        <label>Email: </label>
 	                        <input 
-	                                type="text" 
+	                                type="email" 
 	                                className="form-control"
 	                                value={this.state.contact_email}
 	                                onChange={this.onChangeContactEmail}
+									placeholder="eMail"
 	                                />
 	                    </div>
 	                    <div className="form-group">
-	                        <label>Address: </label>
 	                        <input 
-	                                type="text" 
+	                                type="address" 
 	                                className="form-control"
 	                                value={this.state.contact_address}
 	                                onChange={this.onChangeContactAddress}
+									placeholder="Address"
 	                                />
 	                    </div>
 	                    <div className="form-group">
-	                        <label>Phone: </label>
 	                        <input 
-	                                type="text" 
+	                                type="phonenum" 
 	                                className="form-control"
 	                                value={this.state.contact_phone}
 	                                onChange={this.onChangeContactPhone}
+									placeholder="Phone Number"
 	                                />
 	                    </div>
 
-	                    <div className="form-group">
-							<button type="submit" value="Create Contact">Create Contact</button>
-	                    </div>
+						<div align="center">
+							<footer>
+								<button class="contact">
+									<input type="submit" id="button" value="Add Contact" className="btn btn-primary" />
+									Add Contact
+								</button>
+							</footer>
+						</div>
 	                </form>
-	            </div>
+					<form onSubmit={this.onCancel}>
+						<div align="center">
+							<footer>
+								<button class="cancel">
+									<input type="submit" id="button" value="cancel" className="btn btn-primary" />
+									Cancel
+								</button>
+							</footer>
+						</div>
+					</form>
 	        </div>
         )
     }

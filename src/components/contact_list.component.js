@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 
-import "../auth/RegisterLogin.css";
+import "./Contact.css";
 
 const localApiUrl = "http://localhost:4000";
 const detachedApiUrl = "http://greatcontactmanager.ddns.net:4000";
@@ -15,7 +15,8 @@ export default class ContactList extends Component {
     this.state = {
       hits: [],
       error: null,
-	  userid: ""
+	  userid: "",
+	  search: ""
     };
 	
 	this.addContact = this.addContact.bind(this);
@@ -42,6 +43,11 @@ export default class ContactList extends Component {
 		}));
   }
 
+
+	onChange = e => {
+		this.setState({ [e.target.id]: e.target.value });
+	  };
+	  
 	addContact(e) {
 		e.preventDefault();
 		if(!window.location.href.includes('?'))
@@ -59,8 +65,14 @@ export default class ContactList extends Component {
 	  console.log(this.state.hits);
 	  
 	  var id = this.state.userid;
+	  var search = this.state.search;
 	  return this.state.hits.map(function(currentContact, i)
 	  {
+		if((currentContact.name !== null && currentContact.name.includes(search)) ||
+			(currentContact.email !== null && currentContact.email.includes(search)) ||
+			(currentContact.address !== null && currentContact.address.includes(search)) ||
+			(currentContact.phone !== null && currentContact.phone.includes(search)))
+		{
 		  return (    
 		  <tr>
 			<td>{currentContact.name}</td>
@@ -68,35 +80,55 @@ export default class ContactList extends Component {
 			<td>{currentContact.address}</td>
 			<td>{currentContact.phone}</td>
 			<td>
-				<Link to={"/UpdateContact?" + id + "?" + currentContact._id}>Edit</Link>
+				<Link to={"/UpdateContact?" + id + "?" + currentContact._id}
+					style={{
+						color: "#e1e1e1",
+						fontSize: "15px",
+						cursor: "pointer",
+						fontFamily: "Century Gothic, CenturyGothic, Geneva, AppleGothic, sans-serif",
+					}}>
+					Edit</Link>
 			</td>
-		</tr>)
+			</tr>)
+		}
+		else
+			return "";
 	  });
     }
 
   render() {
     return (
-        <div>
-            <p>Welcome to Contact List Component!!</p>
-            <h3>Contact List</h3>
-				<input type="text" placeholder="Search" class="search"/>
-                <table className="table table-striped" style={{ marginTop: 20 }} >
+        <div className="container">
+
+            <header class="header">
+				<h2 class="title">Contact Manager</h2>
+			</header>
+
+			<input type="text" 
+				placeholder="Search" 
+				class="search"
+				onChange={this.onChange}
+				id="search"
+				value={this.state.search}/>
+				
+			<div class="contacts">
+                <table align="center">
                     <thead>
-                        <tr>
-                            <th>Name</th>
-                            <th>Email</th>
-                            <th>Address</th>
-                            <th>Phone</th>
-                            <th>Action</th>
+                        <tr class="labels">
+                            <th width="30%">Name</th>
+                            <th width="20%">eMail</th>
+                            <th width="20%">Address</th>
+                            <th width="20%">Phone</th>
+                            <th width="10%">Action</th>
                         </tr>
                     </thead>
                     <tbody>
                         { this.contactList() }
                     </tbody>
+				<input type="submit" id="add_contact" value="+ Add Contact" onClick={this.addContact}/>
                 </table>
-				<button type="submit" value="Add Contact" onClick={this.addContact}>Add Contact</button>
+			</div>
         </div>
     )
   }
-
 }

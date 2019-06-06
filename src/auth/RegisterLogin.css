@@ -8,11 +8,6 @@ html {
   height: 100%;
 }
 
-body {
-  vertical-align: middle;
-  height: 100%;
-}
-
 header {
   text-align: center;
   color: #969696;
@@ -60,7 +55,6 @@ label {
   font-family: "Century Gothic", CenturyGothic, Geneva, AppleGothic, sans-serif;
   margin-left: 5px;
 }
-
 
 footer {
   margin-top: 20px;

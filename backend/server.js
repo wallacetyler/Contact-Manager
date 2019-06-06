@@ -58,6 +58,7 @@ app.post('/users/login', function(request, response)
 
 app.post('/users/register', function(request, response)
 {
+	var idd = -1;
 	var query = { user: request.body.user };
 	
 	userdb.find(query).toArray(function(err, result)
@@ -65,7 +66,12 @@ app.post('/users/register', function(request, response)
 		if(err)
 			return response.json({status: "failure"});
 		
-		if(result.length == 0)
+		if(result.length != 0)
+		{
+			console.log("User already taken: " + request.body.user);
+			return response.json({status: "failure"});
+		}
+		else
 		{
 			console.log("Registered user: " + request.body.user);
 			var registerBody =
@@ -73,12 +79,13 @@ app.post('/users/register', function(request, response)
 				user: request.body.user,
 				hash: request.body.hash
 			};
-			userdb.insertOne(registerBody);
-			return response.json({status: "success"});
+			
+			userdb.insertOne(registerBody, function(e, ins)
+			{
+				idd = ins.insertedId;
+				return response.json({status: "success", id: idd});
+			});
 		}
-		
-		console.log("User already taken: " + request.body.user);
-		return response.json({status: "failure"});
 	});
 });
 
@@ -148,13 +155,30 @@ app.post('/contacts/update', function(request, response)
 
 app.post('/contacts/find', function(request, response)
 {
-	var query = { userid: request.body.uid, _id: request.body.cid };
+	
+	console.log(request.body.cid);
+	var query = { _id: ObjectId(request.body.cid) };
+	
+	var outcome = undefined;
 	
 	contactdb.find(query).toArray(function(err, result)
 	{
-		if(result.length >= 1)
-			return response.json({status: "success"});
+		outcome = result;
 	});
 	
+	if(outcome != undefined)
+		return response.json(outcome);
+	
 	return response.json({status: "failure"});
+});
+
+app.post('/contacts/remove', function(request, response)
+{
+	var query = { _id: ObjectId(request.body.cid)};
+	
+	console.log("removing contact with id: " + request.body.cid);
+	
+	contactdb.remove(query);
+	
+	return response.json({status: "success"});
 });

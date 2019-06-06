@@ -61,7 +61,7 @@ class Register extends Component {
 			  else
 			  {
 				  console.log('registration successful');
-				  window.location.href = "/Login";
+				  window.location.href = "/ContactList?"+data.id;
 			  }
 		  });
 	}
@@ -78,7 +78,7 @@ class Register extends Component {
 
 			<form id="register-form" action="" method="post" noValidate onSubmit={this.onSubmit}>
 
-			  <input type="text" placeholder="Username" 
+			  <input type="user" placeholder="Username" 
 				onChange={this.onChange}
 				value={this.state.user}
 				error={errors.user}

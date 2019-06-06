@@ -74,7 +74,7 @@ class Login extends Component {
 
 		<form id="login-form" action="" method="post" noValidate onSubmit={this.onSubmit}>
 
-          <input type="text" placeholder="Username" 
+          <input type="user" placeholder="Username" 
 			onChange={this.onChange}
 			value={this.state.user}
 			error={errors.user}

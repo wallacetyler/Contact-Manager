@@ -1,75 +1,117 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-import axios from 'axios';
 
-const API = 'https://localhost:4000/contacts';
-const Contact = props => (
-    <tr>
-        <td>{props.contact.contact_name}</td>
-        <td>{props.contact.contact_email}</td>
-        <td>{props.contact.contact_address}</td>
-        <td>{props.contact.contact_address}</td>
-        <td>
-            <Link to={"/edit/"+props.contact._id}>Edit</Link>
-        </td>
-    </tr>
-)
+import "./Contact.css";
 
-class App extends Component {
+const localApiUrl = "http://localhost:4000";
+const detachedApiUrl = "http://greatcontactmanager.ddns.net:4000";
+
+
+export default class ContactList extends Component {
+	
   constructor(props) {
     super(props);
 
     this.state = {
       hits: [],
-      isLoading: false,
       error: null,
+	  userid: ""
     };
+	
+	this.addContact = this.addContact.bind(this);
   }
 
   componentDidMount() {
-    this.setState({ isLoading: true });
-
-    axios.get(API)
-      .then(result => this.setState({
-        hits: result.data.hits,
-        isLoading: false
-      }))
-      .catch(error => this.setState({
-        error,
-        isLoading: false
-      }));
+	  if(!window.location.href.includes('?'))
+		  window.location.href = "/Login";
+	  
+		var idtext = window.location.href.split("?")[1];
+		this.setState({userid: idtext});
+	
+		var apiURL = window.location.href.includes("localhost")?localApiUrl:detachedApiUrl;
+	
+		fetch(apiURL + '/contacts/list',
+		{
+			method: 'POST',
+			headers: { "Content-Type": "application/json" },
+			body: JSON.stringify({ uid: idtext })
+		})
+		.then(response => response.json())
+		.then(data => this.setState({
+			hits: data
+		}));
   }
 
+	addContact(e) {
+		e.preventDefault();
+		if(!window.location.href.includes('?'))
+		  window.location.href = "/Login";
+	  
+		var idtext = window.location.href.split("?")[1];
+		
+		window.location.href = "/AddContact?" + idtext;
+	}
+
   contactList() {
-        return this.state.hits.map(function(currentContact, i) {
-            return <Contact contact={currentContact} key={i} />;
-        });
+	  if(this.state.hits.status === "failure")
+		  return;
+	  
+	  console.log(this.state.hits);
+	  
+	  var id = this.state.userid;
+	  return this.state.hits.map(function(currentContact, i)
+	  {
+		  return (    
+		  <tr>
+			<td>{currentContact.name}</td>
+			<td>{currentContact.email}</td>
+			<td>{currentContact.address}</td>
+			<td>{currentContact.phone}</td>
+			<td>
+				<Link to={"/UpdateContact?" + id + "?" + currentContact._id}
+					style={{
+						color: "#e1e1e1",
+						fontSize: "15px",
+						cursor: "pointer",
+						fontFamily: "Century Gothic, CenturyGothic, Geneva, AppleGothic, sans-serif",
+					}}>
+					Edit</Link>
+			</td>
+		  </tr>)
+	  });
     }
 
   render() {
     return (
-        <div>
-            <p>Welcome to Add Contact Component!!</p>
-            <h3>Contact List</h3>
-				<input type="text" placeholder="Search" class="search"/>
-                <table className="table table-striped" style={{ marginTop: 20 }} >
+        <div className="container">
+
+            <header class="header">
+				<h2 class="title">Contact Manager</h2>
+			</header>
+
+			<input type="text" placeholder="Search" class="search"/>
+
+			<div class="contacts">
+                <table align="center">
                     <thead>
-                        <tr>
-                            <th>Name</th>
-                            <th>Email</th>
-                            <th>Address</th>
-                            <th>Phone</th>
-                            <th>Action</th>
+                        <tr class="labels">
+                            <th width="30%">Name</th>
+                            <th width="20%">eMail</th>
+                            <th width="20%">Address</th>
+                            <th width="20%">Phone</th>
+                            <th width="10%">Action</th>
                         </tr>
                     </thead>
                     <tbody>
                         { this.contactList() }
                     </tbody>
                 </table>
+			</div>
+
+			<footer>
+				<input type="submit" id="add_contact" value="+ Add Contact" className="btn btn-primary" onClick={this.addContact}/>
+			</footer>
         </div>
     )
   }
-
 }
-
-export default App;

@@ -1,15 +1,10 @@
 form {
-  margin: 0 auto;
+  margin: auto;
   width: 300px;
 }
 
 html {
   background-color: #424242;
-  height: 100%;
-}
-
-body {
-  vertical-align: middle;
   height: 100%;
 }
 
@@ -60,7 +55,6 @@ label {
   font-family: "Century Gothic", CenturyGothic, Geneva, AppleGothic, sans-serif;
   margin-left: 5px;
 }
-
 
 footer {
   margin-top: 20px;
